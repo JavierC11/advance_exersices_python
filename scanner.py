@@ -2,7 +2,19 @@ import sys
 import os
 import time
 
+#funcion Helper para contar las palabras de cada linea de nuestro string
+def count_words(word: str):
+    nword = 1
+    for i in range(0,len(word)):
+        if i+1 != len(word):       
+            if (word[i] != " " and word[i+1] == " "):
+                nword+= 1
+                aux = nword
+            elif word[i] == "\n":
+                pass
+    return nword
 
+#funcion principal
 def run():
     ##IoMenu
     os.system("clear")
@@ -12,19 +24,17 @@ def run():
     print("***********************************")
     print("🚀Bienvenido al programa Scanner🚀")
     
-    ##Estadandarizamos la palabra
+#Estadandarizamos la palabra
     print("\n\n🟢porfavor ingresa la palabra que \nquieres descomponer en caracteres: ")
-    word = sys.stdin.read()
-    word = word.lower()
+    word = sys.stdin.read().lower()
     nword = 0
-    # nspace = 0
-    # njums = 0
-
+    
+#ingresamos todas las letras a nuestro diccionario de python
     for i in range(0,len(word)):
         aux = 0 
         valueaux = 1    
         for key, value in words_list.items(): 
-            if word[i] == key:
+            if word[i] == key:  
                 value = value + 1
                 aux = value
         if aux ==0:
@@ -33,32 +43,34 @@ def run():
         else:
             words_list[word[i]] = (aux)
 
-    #En este codigo contamos las palabras que tiene nuestro string recibido
+    
+
+#En este codigo contamos las palabras que tiene nuestro string recibido
     nword = 1
-    nlines = 1
     for i in range(0,len(word)):
         if i+1 != len(word):       
             if (word[i] == " " and word[i+1] != " ") or (word[i] == "\n" and word[i+1] != " "):
                 nword+= 1
-            elif word[i] == "\n":
-                nlines += 1
 
+#Patitmos nuestro texto en lineas y contamos las palabras de cada linea con ayuda de nuestras funciones.
+    print("\n\n")
+    sentence = word.split("\n")
+    i = 1
+    for linenum in range(0,len(sentence)-1):
+        nwords=count_words(sentence[linenum])
+        print("👉 "+str(nwords)+" Palabras en linea numero "+str(i))
+        i+=1
 
-
-    #Mostramos la palabra para tener una referencia de lo que tenemos que descomponer en caracteres,
-    #tambien agregamos un "." al final para poder saber si hay espacios despues de la ultima palabra.
-    print("\n🟢La palabra ha descomponer es \n👉 "+word+".\n")
-    #Mostradmos todas las latras cambiando los espacios " " por la palabra "Espacio"
-    #como se inidico en el ejercicio.
+#listamos todas las palabras dentro de nuestro diccionario
     for key, value in words_list.items():
         if key == " ":
             # nspace += 1
-            print("Espacio 👉 " +str(value))
+            print("Espacios 👉 " +str(value))
         elif key == "\n":
             print("Lineas 👉"+str(value))
         else:
             print(key+" 👉 "+str(value))
-    print("Palabras 👉 " + str(nword))
+    print("Palabras totales👉 " + str(nword))
     time.sleep(10)
     
     
